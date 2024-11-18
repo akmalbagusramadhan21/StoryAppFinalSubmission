@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="image_auth">image Login</string>
+    <string name="photo">foto</string>
+    <string name="logout">Logout</string>
+    <string name="image_description">add deskrispi</string>
+    <string name="add_icon">add\n</string>
+    <string name="imagedetail">add deskripsi</string>
+    <string name="camera">camera</string>
+    <string name="gallery">gallery</string>
+    <string name="description">deskripsi</string>
+    <string name="uploud">upload</string>
+    <string name="upload_success">upload berhasil</string>
+    <string name="upload_failed">upload gagal</string>
+    <string name="upload_error">upload error</string>
+    <string name="logout_success">logout berhasil</string>"
+    <string name="logout_failed">logout gagal</string>
+    <string name="error_password">password kurang dari 8</string>
+    <string name="error_email">email eror bos\n</string>
+</resources>

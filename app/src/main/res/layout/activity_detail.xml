@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.detailstory.DetailActivity">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:padding="16dp">
+
+       <ImageView
+           android:id="@+id/iv_item_photo"
+           android:layout_width="match_parent"
+           android:layout_height="200dp"
+           android:scaleType="centerCrop"
+           android:contentDescription="@string/photo"
+           tools:src="@tools:sample/avatars"/>
+
+       <TextView
+           android:id="@+id/tv_detail_name"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="8dp"
+           android:text="judulnya di gini"
+           android:textSize="20sp"
+           android:textStyle="bold"
+           android:gravity="center" />
+
+       <TextView
+           android:id="@+id/tv_detail_description"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="8dp"
+           android:text="Bismillah gais selesai tepat waktu"
+           android:textSize="16sp" />
+
+   </LinearLayout>
+
+
+</ScrollView>
