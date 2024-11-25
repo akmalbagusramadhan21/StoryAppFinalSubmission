@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+    id("com.google.devtools.ksp")
+    id("kotlin-parcelize")
 
 }
 
@@ -93,5 +95,5 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler.v250)
     implementation(libs.androidx.room.ktx.v250)
-//    ksp(libs.androidx.room.compiler)
+    ksp(libs.room.compiler)
 }
