@@ -3,6 +3,7 @@ package com.example.storyapp.ui.main
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.storyapp.MapsViewModel
 import com.example.storyapp.inject.Injection
 import com.example.storyapp.repository.StoryRepository
 import com.example.storyapp.ui.addstory.AddStoryViewModel
@@ -21,6 +22,7 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel(storyRepository) as T
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> DetailViewModel(storyRepository) as T
             modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> AddStoryViewModel(storyRepository) as T
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> MapsViewModel(storyRepository) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class")
         }
     }

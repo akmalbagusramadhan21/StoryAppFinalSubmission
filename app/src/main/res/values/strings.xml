@@ -20,4 +20,7 @@
     <string name="logout_failed">logout gagal</string>
     <string name="error_password">password kurang dari 8</string>
     <string name="error_email">email eror bos\n</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="maps">Maps</string>
+    <string name="error_load_more">Failed to load more data</string>
 </resources>

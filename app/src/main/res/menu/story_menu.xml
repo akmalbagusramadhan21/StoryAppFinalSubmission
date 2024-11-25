@@ -5,4 +5,9 @@
         android:icon="@drawable/baseline_logout_24"
         android:title="@string/logout"
         app:showAsAction="ifRoom"/>
+    <item android:id="@+id/maps"
+        android:icon="@drawable/baseline_map_24"
+        android:title="@string/maps"
+        app:showAsAction="ifRoom"/>
+
 </menu>

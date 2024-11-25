@@ -2,12 +2,21 @@ package com.example.storyapp.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
+import com.example.storyapp.StoryPagingSource
 import com.example.storyapp.api.ApiService
+import com.example.storyapp.data.StoryRemoteMediator
 import com.example.storyapp.data.request.LoginRequest
 import com.example.storyapp.data.response.AddNewStoryResponse
 import com.example.storyapp.data.response.DetailStoryResponse
 import com.example.storyapp.data.response.ErrorResponse
+import com.example.storyapp.data.response.ListStoryItem
 import com.example.storyapp.data.response.StoriesResponse
+import com.example.storyapp.database.StoryDatabase
 import com.example.storyapp.preference.UserModel
 import com.example.storyapp.preference.UserPreference
 import com.example.storyapp.utils.Result
@@ -19,13 +28,19 @@ import okhttp3.RequestBody
 import retrofit2.HttpException
 
 class StoryRepository private constructor(
+    private val database: StoryDatabase,
     private val apiService: ApiService,
     private val userPreference: UserPreference
 ) {
-    suspend fun getStories(): StoriesResponse {
-        val token = userPreference.getSession().first().token
-       return apiService.getStories("Bearer $token")
+//    suspend fun getStories(): StoriesResponse {
+//        val token = userPreference.getSession().first().token
+//        return apiService.getStories("Bearer $token", location = 0)
+//
+//    }
 
+    suspend fun getStoriesWithLocation(): StoriesResponse {
+        val token = userPreference.getSession().first().token
+        return apiService.getStoriesWithLocation("Bearer $token", location = 1)
     }
 
     suspend fun getDetailStory(id: String): DetailStoryResponse? {
@@ -38,26 +53,32 @@ class StoryRepository private constructor(
         }
     }
 
-    suspend fun register(name: String, email: String, password: String) = apiService.register(name, email, password)
+    suspend fun register(name: String, email: String, password: String) =
+        apiService.register(name, email, password)
 
-    suspend fun login(loginRequest: LoginRequest) = apiService.logInUser(loginRequest.email,loginRequest.password)
+    suspend fun login(loginRequest: LoginRequest) =
+        apiService.logInUser(loginRequest.email, loginRequest.password)
 
     suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)
     }
+
     suspend fun logout() {
         userPreference.logout()
     }
 
     fun getSession(): Flow<UserModel> = userPreference.getSession()
 
-    fun addStory(file : MultipartBody.Part,description: RequestBody): LiveData<Result<AddNewStoryResponse>> = liveData{
+    fun addStory(
+        file: MultipartBody.Part,
+        description: RequestBody
+    ): LiveData<Result<AddNewStoryResponse>> = liveData {
         emit(Result.Loading)
-        try{
+        try {
             val token = userPreference.getSession().first().token
-            val response = apiService.addStory("Bearer $token",file,description)
+            val response = apiService.addStory("Bearer $token", file, description)
             emit(Result.Success(response))
-        }catch (e: HttpException) {
+        } catch (e: HttpException) {
             val jsonInString = e.response()?.errorBody()?.string()
             val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
             val errorMessage = errorBody.message
@@ -65,13 +86,28 @@ class StoryRepository private constructor(
         }
     }
 
+
+    @OptIn(ExperimentalPagingApi::class)
+    fun getStoryPagingSource(): Flow<PagingData<ListStoryItem>> = Pager(
+        config = PagingConfig(
+            pageSize = 20,
+            enablePlaceholders = false
+        ),
+        remoteMediator = StoryRemoteMediator(database, userPreference, apiService),
+        pagingSourceFactory = {
+            StoryPagingSource(apiService, userPreference, 0)
+        }
+    ).flow
+
+
+
     companion object {
         @Volatile
         private var instance: StoryRepository? = null
 
-        fun getInstance(apiService: ApiService, userPreference: UserPreference): StoryRepository =
+        fun getInstance(database: StoryDatabase,apiService: ApiService, userPreference: UserPreference): StoryRepository =
             instance ?: synchronized(this) {
-                instance ?: StoryRepository(apiService, userPreference)
+                instance ?: StoryRepository(database ,apiService, userPreference)
             }.also { instance = it }
     }
 }

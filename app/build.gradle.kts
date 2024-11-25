@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+
 }
 
 android {
@@ -34,6 +36,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
     }
     buildFeatures {
         viewBinding = true
@@ -49,6 +52,8 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.perf.ktx)
+    implementation(libs.play.services.maps)
+    implementation(libs.androidx.room.common)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -78,4 +83,15 @@ dependencies {
 
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout.v214)
+    //maps
+    implementation(libs.play.services.maps)
+    //pagging 3
+    implementation(libs.androidx.paging.runtime.ktx)
+    //room paging
+    implementation(libs.androidx.room.paging)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler.v250)
+    implementation(libs.androidx.room.ktx.v250)
+//    ksp(libs.androidx.room.compiler)
 }
