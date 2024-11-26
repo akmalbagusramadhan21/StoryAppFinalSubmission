@@ -32,11 +32,6 @@ class StoryRepository private constructor(
     private val apiService: ApiService,
     private val userPreference: UserPreference
 ) {
-//    suspend fun getStories(): StoriesResponse {
-//        val token = userPreference.getSession().first().token
-//        return apiService.getStories("Bearer $token", location = 0)
-//
-//    }
 
     suspend fun getStoriesWithLocation(): StoriesResponse {
         val token = userPreference.getSession().first().token

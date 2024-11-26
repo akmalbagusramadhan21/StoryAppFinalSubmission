@@ -18,24 +18,24 @@ data class StoriesResponse(
 @Entity(tableName = "story")
 data class ListStoryItem(
 
-	@field:SerializedName("photoUrl")
-	val photoUrl: String? = null,
-
-	@field:SerializedName("createdAt")
-	val createdAt: String? = null,
-
-	@field:SerializedName("name")
-	val name: String? = null,
-
-	@field:SerializedName("description")
-	val description: String? = null,
-
-	@field:SerializedName("lon")
-	val lon: Any? = null,
-
 	@PrimaryKey
 	@field:SerializedName("id")
-	val id: String? = null,
+	val id: String,
+
+	@field:SerializedName("photoUrl")
+	val photoUrl: String,
+
+	@field:SerializedName("createdAt")
+	val createdAt: String,
+
+	@field:SerializedName("name")
+	val name: String,
+
+	@field:SerializedName("description")
+	val description: String,
+
+	@field:SerializedName("lon")
+	val lon: Double? = null,
 
 	@field:SerializedName("lat")
 	val lat: Double? = null
